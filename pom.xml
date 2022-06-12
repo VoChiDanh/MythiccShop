@@ -6,7 +6,7 @@
 
     <groupId>net.danh</groupId>
     <artifactId>MythiccShop</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <packaging>jar</packaging>
 
     <name>MythiccShop</name>
@@ -108,7 +108,7 @@
         <dependency>
             <groupId>com.github.D-x-Z</groupId>
             <artifactId>DCore</artifactId>
-            <version>5535515af6</version>
+            <version>0713e72740</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

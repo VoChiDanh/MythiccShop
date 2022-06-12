@@ -2,7 +2,7 @@ name: MythiccShop
 version: '${project.version}'
 main: net.danh.mythiccshop.MythiccShop
 api-version: 1.16
-depend: [ MythicMobs, Vault, ProtocolLib ]
+depend: [ MythicMobs, Vault ]
 authors: [ VoChiDanh ]
 description: ${project.description}
 commands:
