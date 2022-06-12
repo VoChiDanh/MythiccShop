@@ -9,9 +9,9 @@ import java.io.File;
 public class Shop {
 
 
+    private final String name;
     private File file;
     private FileConfiguration config;
-    private final String name;
 
     public Shop(String name) {
         this.name = name;

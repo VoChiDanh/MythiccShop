@@ -15,7 +15,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import static net.danh.dcore.Utils.Items.Lore;
 import static net.danh.dcore.Utils.Items.makeItem;
