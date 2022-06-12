@@ -1,0 +1,20 @@
+name: MythiccShop
+version: '${project.version}'
+main: net.danh.mythiccshop.MythiccShop
+api-version: 1.16
+depend: [ MythicMobs, Vault, ProtocolLib ]
+authors: [ VoChiDanh ]
+description: ${project.description}
+commands:
+  mythiccshop:
+    description: mythiccshop main command
+permissions:
+  mythiccshop.admin:
+    description: Admin permission
+    default: op
+  mythiccshop.shop.*:
+    description: Full access to shop
+    default: false
+  mythiccshop.shop.shopname:
+    description: Access to one shop
+    default: false
