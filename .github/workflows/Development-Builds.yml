@@ -29,7 +29,7 @@ jobs:
         uses: tsickert/discord-webhook@v4.0.0
         with:
           webhook-url: ${{ secrets.WEBHOOK_URL }}
-          username: "${{ steps.split.outputs._0 }}"
+          username: "${{ steps.split.outputs._0 }} - Legacy"
           embed-title: "${{ github.actor }} pushed an update for ${{ steps.split.outputs._1 }}"
           avatar-url: "https://github.com/${{ steps.split.outputs._0 }}.png"
           embed-color: "65280"

@@ -41,8 +41,8 @@ public final class MythiccShop extends JavaPlugin {
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
-        if (!Objects.requireNonNull(getServer().getPluginManager().getPlugin("MythicMobs")).getDescription().getVersion().startsWith("5")) {
-            getLogger().log(Level.INFO, "You need mythicmobs 5.x.x to use this plugins!");
+        if (!Objects.requireNonNull(getServer().getPluginManager().getPlugin("MythicMobs")).getDescription().getVersion().startsWith("4")) {
+            getLogger().log(Level.INFO, "You need mythicmobs 4.x.x to use this plugins!");
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
