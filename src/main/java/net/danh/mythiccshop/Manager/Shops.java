@@ -1,6 +1,6 @@
 package net.danh.mythiccshop.Manager;
 
-import io.lumine.mythic.bukkit.MythicBukkit;
+import io.lumine.xikage.mythicmobs.MythicMobs;
 import net.danh.dcore.DCore;
 import net.danh.dcore.Utils.Chat;
 import net.danh.mythiccshop.File.Files;
@@ -41,11 +41,11 @@ public class Shops {
                 }
             }
             if (get.contains("ITEMS." + item_name + ".MYTHICC_TYPE")) {
-                ItemStack mythicc_item = MythicBukkit.inst().getItemManager().getItemStack(get.getString("ITEMS." + item_name + ".MYTHICC_TYPE"));
+                ItemStack mythicc_item = MythicMobs.inst().getItemManager().getItemStack(get.getString("ITEMS." + item_name + ".MYTHICC_TYPE"));
                 try {
                     ItemMeta meta = mythicc_item.getItemMeta();
                     List<String> lore = meta.getLore();
-                    List<String> lore_item = Files.getconfigfile().getStringList("LORE").stream().map(s -> s.replaceAll("%sell%", String.format("%,d", get.getInt("ITEMS." + item_name + ".SELL_PRICE"))).replaceAll("%buy%", String.format("%,d", get.getInt("ITEMS." + item_name + ".BUY_PRICE")))).toList();
+                    List<String> lore_item = Files.getconfigfile().getStringList("LORE").stream().map(s -> s.replaceAll("%sell%", String.format("%,d", get.getInt("ITEMS." + item_name + ".SELL_PRICE"))).replaceAll("%buy%", String.format("%,d", get.getInt("ITEMS." + item_name + ".BUY_PRICE")))).collect(Collectors.toList());
                     if (lore != null) {
                         lore.addAll(lore_item);
                         meta.setLore(Lore(lore));

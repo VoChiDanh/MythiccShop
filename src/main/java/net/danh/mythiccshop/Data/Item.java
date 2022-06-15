@@ -1,6 +1,6 @@
 package net.danh.mythiccshop.Data;
 
-import io.lumine.mythic.bukkit.MythicBukkit;
+import io.lumine.xikage.mythicmobs.MythicMobs;
 import net.danh.mythiccshop.MythiccShop;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.entity.Player;
@@ -48,11 +48,11 @@ public class Item {
     }
 
     public static void sellMythiccItem(Player p, String type, Integer price, Integer amount) {
-        if (consumeItem(p, amount, MythicBukkit.inst().getItemManager().getItemStack(type))) {
+        if (consumeItem(p, amount, MythicMobs.inst().getItemManager().getItemStack(type))) {
             EconomyResponse e = MythiccShop.getEconomy().depositPlayer(p, price * amount);
             if (e.transactionSuccess()) {
                 sendPlayerMessage(p, Objects.requireNonNull(getlanguagefile().getString("SELL_ITEMS"))
-                        .replaceAll("%item%", MythicBukkit.inst().getItemManager().getItemStack(type).getItemMeta().getDisplayName())
+                        .replaceAll("%item%", MythicMobs.inst().getItemManager().getItemStack(type).getItemMeta().getDisplayName())
                         .replaceAll("%price%", String.format("%,d", price))
                         .replaceAll("%amount%", String.format("%,d", amount)));
             }
@@ -62,10 +62,10 @@ public class Item {
     public static void buyMythiccItem(Player p, String type, Integer price, Integer amount) {
         if (MythiccShop.getEconomy().getBalance(p) >= price * amount) {
             EconomyResponse e = MythiccShop.getEconomy().withdrawPlayer(p, price * amount);
-            p.getInventory().addItem(MythicBukkit.inst().getItemManager().getItemStack(type, amount));
+            p.getInventory().addItem(MythicMobs.inst().getItemManager().getItemStack(type).add(amount));
             if (e.transactionSuccess()) {
                 sendPlayerMessage(p, Objects.requireNonNull(getlanguagefile().getString("BUY_ITEMS"))
-                        .replaceAll("%item%", MythicBukkit.inst().getItemManager().getItemStack(type).getItemMeta().getDisplayName())
+                        .replaceAll("%item%", MythicMobs.inst().getItemManager().getItemStack(type).getItemMeta().getDisplayName())
                         .replaceAll("%price%", String.format("%,d", price))
                         .replaceAll("%amount%", String.format("%,d", amount)));
             }
