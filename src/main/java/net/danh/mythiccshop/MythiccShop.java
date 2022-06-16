@@ -9,9 +9,7 @@ import net.danh.mythiccshop.File.Files;
 import net.danh.mythiccshop.File.Shop;
 import net.danh.mythiccshop.Manager.Debug;
 import net.milkbowl.vault.economy.Economy;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -31,6 +29,14 @@ public final class MythiccShop extends JavaPlugin {
 
     public static MythiccShop getInstance() {
         return inst;
+    }
+
+    public static void loadShop() {
+        for (String name : Files.getconfigfile().getStringList("SHOP")) {
+            Shop shop = new Shop(name);
+            shop.save();
+            shop.load();
+        }
     }
 
     @Override
@@ -66,16 +72,6 @@ public final class MythiccShop extends JavaPlugin {
         }
         Files.saveconfig();
         Files.savelanguage();
-    }
-
-    public static void loadShop() {
-        for (String name : Files.getconfigfile().getStringList("SHOP")) {
-            Shop shop = new Shop(name);
-            shop.save();
-            MythiccShop.getInstance().getLogger().log(Level.INFO, "Loading shop " + name);
-            shop.load();
-        }
-        MythiccShop.getInstance().getLogger().log(Level.INFO, "Loaded " + Files.getconfigfile().getStringList("SHOP").size() + " shop(s)");
     }
 
     private boolean setupEconomy() {

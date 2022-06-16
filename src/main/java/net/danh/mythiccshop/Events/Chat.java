@@ -8,14 +8,14 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import static net.danh.dcore.Random.Number.isInteger;
 
 public class Chat implements Listener {
 
     @EventHandler
-    public void onChat(PlayerChatEvent e) {
+    public void onChat(AsyncPlayerChatEvent e) {
         Player p = e.getPlayer();
         String msg = ChatColor.stripColor(e.getMessage());
         if (Debug.sell.contains(p)) {

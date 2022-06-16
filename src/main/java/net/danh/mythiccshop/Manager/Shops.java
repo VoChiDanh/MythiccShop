@@ -2,6 +2,7 @@ package net.danh.mythiccshop.Manager;
 
 import io.lumine.xikage.mythicmobs.MythicMobs;
 import net.danh.dcore.DCore;
+import net.danh.dcore.NMS.NMSAssistant;
 import net.danh.dcore.Utils.Chat;
 import net.danh.mythiccshop.File.Files;
 import net.danh.mythiccshop.File.Shop;
@@ -29,7 +30,14 @@ public class Shops {
         Inventory inv = Bukkit.createInventory(p, size, name);
         for (String item_name : Objects.requireNonNull(get.getConfigurationSection("ITEMS")).getKeys(false)) {
             if (get.contains("ITEMS." + item_name + ".MATERIAL")) {
-                ItemStack item = makeItem(Objects.requireNonNull(Material.getMaterial(Objects.requireNonNull(get.getString("ITEMS." + item_name + ".MATERIAL")))), Short.parseShort("0"), 1, get.getBoolean("ITEMS." + item_name + ".GLOW"), get.getBoolean("ITEMS." + item_name + ".HIDE_FLAG"), false, Objects.requireNonNull(get.getString("ITEMS." + item_name + ".NAME")), get.getStringList("ITEMS." + item_name + ".LORE"));
+                ItemStack item = null;
+                NMSAssistant nms = new NMSAssistant();
+                if (!get.contains("ITEMS." + item_name + ".DATA")) {
+                    item = makeItem(Objects.requireNonNull(Material.getMaterial(Objects.requireNonNull(get.getString("ITEMS." + item_name + ".MATERIAL")))), Short.parseShort("0"), 1, get.getBoolean("ITEMS." + item_name + ".GLOW"), get.getBoolean("ITEMS." + item_name + ".HIDE_FLAG"), false, Objects.requireNonNull(get.getString("ITEMS." + item_name + ".NAME")), get.getStringList("ITEMS." + item_name + ".LORE"));
+                } else {
+                    short data = Short.parseShort(get.getString("ITEMS." + item_name + ".DATA"));
+                    item = makeItem(Objects.requireNonNull(Material.getMaterial(Objects.requireNonNull(get.getString("ITEMS." + item_name + ".MATERIAL")))), data, 1, get.getBoolean("ITEMS." + item_name + ".GLOW"), get.getBoolean("ITEMS." + item_name + ".HIDE_FLAG"), false, Objects.requireNonNull(get.getString("ITEMS." + item_name + ".NAME")), get.getStringList("ITEMS." + item_name + ".LORE"));
+                }
                 if (get.contains("ITEMS." + item_name + ".SLOT")) {
                     int slot = get.getInt("ITEMS." + item_name + ".SLOT");
                     inv.setItem(slot, item);

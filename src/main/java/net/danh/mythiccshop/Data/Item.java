@@ -62,7 +62,7 @@ public class Item {
     public static void buyMythiccItem(Player p, String type, Integer price, Integer amount) {
         if (MythiccShop.getEconomy().getBalance(p) >= price * amount) {
             EconomyResponse e = MythiccShop.getEconomy().withdrawPlayer(p, price * amount);
-            p.getInventory().addItem(MythicMobs.inst().getItemManager().getItemStack(type).add(amount));
+            p.getInventory().addItem(MythicMobs.inst().getItemManager().getItemStack(type).asQuantity(amount));
             if (e.transactionSuccess()) {
                 sendPlayerMessage(p, Objects.requireNonNull(getlanguagefile().getString("BUY_ITEMS"))
                         .replaceAll("%item%", MythicMobs.inst().getItemManager().getItemStack(type).getItemMeta().getDisplayName())
