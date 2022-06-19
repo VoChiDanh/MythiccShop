@@ -30,8 +30,7 @@ public class Shops {
         Inventory inv = Bukkit.createInventory(p, size, name);
         for (String item_name : Objects.requireNonNull(get.getConfigurationSection("ITEMS")).getKeys(false)) {
             if (get.contains("ITEMS." + item_name + ".MATERIAL")) {
-                ItemStack item = null;
-                NMSAssistant nms = new NMSAssistant();
+                ItemStack item;
                 if (!get.contains("ITEMS." + item_name + ".DATA")) {
                     item = makeItem(Objects.requireNonNull(Material.getMaterial(Objects.requireNonNull(get.getString("ITEMS." + item_name + ".MATERIAL")))), Short.parseShort("0"), 1, get.getBoolean("ITEMS." + item_name + ".GLOW"), get.getBoolean("ITEMS." + item_name + ".HIDE_FLAG"), false, Objects.requireNonNull(get.getString("ITEMS." + item_name + ".NAME")), get.getStringList("ITEMS." + item_name + ".LORE"));
                 } else {
