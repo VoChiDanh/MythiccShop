@@ -21,22 +21,30 @@ public class Inventory implements Listener {
         Player p = (Player) e.getWhoClicked();
         for (String name : Files.getconfigfile().getStringList("SHOP")) {
             Shop shop = new Shop(name);
-            if (e.getView().getTitle().equals(Chat.colorize(Objects.requireNonNull(shop.getConfig().getString("NAME"))))) {
+            String sname;
+            if (!shop.getConfig().contains("NAME")) {
+                sname = "&0Shop";
+            } else {
+                sname = shop.getConfig().getString("NAME");
+            }
+            if (e.getView().getTitle().equals(Chat.colorize(Objects.requireNonNull(sname)))) {
                 e.setCancelled(true);
                 if (e.getClick() == ClickType.LEFT) {
                     int slot = e.getSlot();
                     for (String names : Objects.requireNonNull(shop.getConfig().getConfigurationSection("ITEMS")).getKeys(false)) {
                         if (shop.getConfig().contains("ITEMS." + names + ".MYTHICC_TYPE")) {
                             if (shop.getConfig().getInt("ITEMS." + names + ".SLOT") == slot) {
-                                if (shop.getConfig().getInt("ITEMS." + names + ".SELL_PRICE") < 0) {
+                                if (shop.getConfig().getInt("ITEMS." + names + ".SELL_PRICE") <= 0) {
                                     sendPlayerMessage(p, Files.getlanguagefile().getString("CAN_NOT_SELL"));
                                     return;
                                 }
-                                Debug.sell.add(p);
-                                Debug.name.put(p, shop.getName());
-                                Debug.item.put(p, shop.getConfig().getString("ITEMS." + names + ".MYTHICC_TYPE"));
-                                p.closeInventory();
-                                sendPlayerMessage(p, Files.getlanguagefile().getString("CHAT_AMOUNT"));
+                                if (shop.getConfig().getInt("ITEMS." + names + ".SELL_PRICE") > 0) {
+                                    Debug.sell.add(p);
+                                    Debug.name.put(p, shop.getName());
+                                    Debug.item.put(p, shop.getConfig().getString("ITEMS." + names + ".MYTHICC_TYPE"));
+                                    p.closeInventory();
+                                    sendPlayerMessage(p, Files.getlanguagefile().getString("CHAT_AMOUNT"));
+                                }
                             }
                         }
                     }
@@ -46,15 +54,17 @@ public class Inventory implements Listener {
                     for (String names : Objects.requireNonNull(shop.getConfig().getConfigurationSection("ITEMS")).getKeys(false)) {
                         if (shop.getConfig().contains("ITEMS." + names + ".MYTHICC_TYPE")) {
                             if (shop.getConfig().getInt("ITEMS." + names + ".SLOT") == slot) {
-                                if (shop.getConfig().getInt("ITEMS." + names + ".SELL_PRICE") < 0) {
+                                if (shop.getConfig().getInt("ITEMS." + names + ".BUY_PRICE") <= 0) {
                                     sendPlayerMessage(p, Files.getlanguagefile().getString("CAN_NOT_BUY"));
                                     return;
                                 }
-                                Debug.buy.add(p);
-                                Debug.name.put(p, shop.getName());
-                                Debug.item.put(p, shop.getConfig().getString("ITEMS." + names + ".MYTHICC_TYPE"));
-                                p.closeInventory();
-                                sendPlayerMessage(p, Files.getlanguagefile().getString("CHAT_AMOUNT"));
+                                if (shop.getConfig().getInt("ITEMS." + names + ".BUY_PRICE") > 0) {
+                                    Debug.buy.add(p);
+                                    Debug.name.put(p, shop.getName());
+                                    Debug.item.put(p, shop.getConfig().getString("ITEMS." + names + ".MYTHICC_TYPE"));
+                                    p.closeInventory();
+                                    sendPlayerMessage(p, Files.getlanguagefile().getString("CHAT_AMOUNT"));
+                                }
                             }
                         }
                     }
