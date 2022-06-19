@@ -28,6 +28,7 @@ public class Item {
         }
         return c;
     }
+
     public static void removeItems(Player player, ItemStack item, long amount) {
         item = item.clone();
         final PlayerInventory inv = player.getInventory();
@@ -55,7 +56,7 @@ public class Item {
     public static void sellMythiccItem(Player p, String type, Integer price, Integer amount) {
         int a = getPlayerAmount(p, MythicMobs.inst().getItemManager().getItemStack(type).asQuantity(amount));
         if (a >= amount) {
-            removeItems(p,MythicMobs.inst().getItemManager().getItemStack(type), amount);
+            removeItems(p, MythicMobs.inst().getItemManager().getItemStack(type), amount);
             EconomyResponse e = MythiccShop.getEconomy().depositPlayer(p, price * amount);
             if (e.transactionSuccess()) {
                 sendPlayerMessage(p, Objects.requireNonNull(getlanguagefile().getString("SELL_ITEMS")).replaceAll("%item%", MythicMobs.inst().getItemManager().getItemStack(type).getItemMeta().getDisplayName()).replaceAll("%price%", String.format("%,d", price * amount)).replaceAll("%amount%", String.format("%,d", amount)));
