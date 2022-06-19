@@ -23,19 +23,15 @@ public class Files {
     public static void createfiles() {
         configFile = new File(getInstance().getDataFolder(), "config.yml");
         languageFile = new File(getInstance().getDataFolder(), "language.yml");
-        File exampleFile = new File(getInstance().getDataFolder(), "example.yml");
 
         if (!configFile.exists()) getInstance().saveResource("config.yml", false);
         if (!languageFile.exists()) getInstance().saveResource("language.yml", false);
-        if (!exampleFile.exists()) getInstance().saveResource("example.yml", false);
         language = new YamlConfiguration();
         config = new YamlConfiguration();
-        FileConfiguration example = new YamlConfiguration();
 
         try {
             language.load(languageFile);
             config.load(configFile);
-            example.load(exampleFile);
         } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
         }
