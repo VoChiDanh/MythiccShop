@@ -44,8 +44,7 @@ public class Shop {
                 MythiccShop.getInstance().getLogger().log(Level.INFO, "Creating shop " + name + "...");
                 config.set("NAME", "&0Shop " + name);
                 config.set("SIZE", 1);
-                config.set("ITEMS.FILL.MATERIAL", "STAINED_GLASS_PANE");
-                config.set("ITEMS.FILL.DATA", 7);
+                config.set("ITEMS.FILL.MATERIAL", "BLACK_STAINED_GLASS_PANE");
                 config.set("ITEMS.FILL.NAME", "&7 ");
                 config.set("ITEMS.FILL.HIDE_FLAG", true);
                 config.set("ITEMS.FILL.GLOW", false);
