@@ -13,9 +13,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import static net.danh.dcore.Utils.Items.Lore;
 import static net.danh.dcore.Utils.Items.makeItem;
@@ -29,13 +29,8 @@ public class Shops {
         Inventory inv = Bukkit.createInventory(p, size, name);
         for (String item_name : Objects.requireNonNull(get.getConfigurationSection("ITEMS")).getKeys(false)) {
             if (get.contains("ITEMS." + item_name + ".MATERIAL")) {
-                ItemStack item;
-                if (!get.contains("ITEMS." + item_name + ".DATA")) {
-                    item = makeItem(Objects.requireNonNull(Material.getMaterial(Objects.requireNonNull(get.getString("ITEMS." + item_name + ".MATERIAL")))), Short.parseShort("0"), 1, get.getBoolean("ITEMS." + item_name + ".GLOW"), get.getBoolean("ITEMS." + item_name + ".HIDE_FLAG"), false, Objects.requireNonNull(get.getString("ITEMS." + item_name + ".NAME")), get.getStringList("ITEMS." + item_name + ".LORE"));
-                } else {
-                    short data = Short.parseShort(get.getString("ITEMS." + item_name + ".DATA"));
-                    item = makeItem(Objects.requireNonNull(Material.getMaterial(Objects.requireNonNull(get.getString("ITEMS." + item_name + ".MATERIAL")))), data, 1, get.getBoolean("ITEMS." + item_name + ".GLOW"), get.getBoolean("ITEMS." + item_name + ".HIDE_FLAG"), false, Objects.requireNonNull(get.getString("ITEMS." + item_name + ".NAME")), get.getStringList("ITEMS." + item_name + ".LORE"));
-                }
+                ItemStack item = makeItem(Objects.requireNonNull(Material.getMaterial(Objects.requireNonNull(get.getString("ITEMS." + item_name + ".MATERIAL")))), Short.parseShort("0"), 1, get.getBoolean("ITEMS." + item_name + ".GLOW"), get.getBoolean("ITEMS." + item_name + ".HIDE_FLAG"), false, Objects.requireNonNull(get.getString("ITEMS." + item_name + ".NAME")), get.getStringList("ITEMS." + item_name + ".LORE"));
+
                 if (get.contains("ITEMS." + item_name + ".SLOT")) {
                     int slot = get.getInt("ITEMS." + item_name + ".SLOT");
                     inv.setItem(slot, item);
@@ -50,12 +45,16 @@ public class Shops {
                 ItemStack mythicc_item = MythicBukkit.inst().getItemManager().getItemStack(get.getString("ITEMS." + item_name + ".MYTHICC_TYPE"));
                 try {
                     ItemMeta meta = mythicc_item.getItemMeta();
-                    List<String> lore = meta.getLore();
-                    List<String> lore_item = Files.getconfigfile().getStringList("LORE").stream().map(s -> s.replaceAll("%sell%", String.format("%,d", get.getInt("ITEMS." + item_name + ".SELL_PRICE"))).replaceAll("%buy%", String.format("%,d", get.getInt("ITEMS." + item_name + ".BUY_PRICE")))).collect(Collectors.toList());
-                    if (lore != null) {
+                    List<String> lore_item = meta.getLore();
+                    List<String> lore = new ArrayList<>();
+                    List<String> lore_items = Files.getconfigfile().getStringList("LORE").stream().map(s -> s.replaceAll("%sell%", String.format("%,d", get.getInt("ITEMS." + item_name + ".SELL_PRICE"))).replaceAll("%buy%", String.format("%,d", get.getInt("ITEMS." + item_name + ".BUY_PRICE")))).toList();
+                    if (lore_item == null) {
+                        lore.addAll(lore_items);
+                    } else {
                         lore.addAll(lore_item);
-                        meta.setLore(Lore(lore));
+                        lore.addAll(lore_items);
                     }
+                    meta.setLore(Lore(lore));
                     mythicc_item.setItemMeta(meta);
                     int slot = get.getInt("ITEMS." + item_name + ".SLOT");
                     inv.setItem(slot, mythicc_item);
