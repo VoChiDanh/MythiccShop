@@ -4,7 +4,7 @@ main: net.danh.mythiccshop.MythiccShop
 api-version: 1.16
 depend: [ MythicMobs, Vault ]
 authors: [ VoChiDanh ]
-description: ${project.description}
+description: '${project.description}'
 commands:
   mythiccshop:
     description: mythiccshop main command
