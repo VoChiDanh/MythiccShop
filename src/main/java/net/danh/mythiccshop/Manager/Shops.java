@@ -47,7 +47,7 @@ public class Shops {
                     ItemMeta meta = mythicc_item.getItemMeta();
                     List<String> lore_item = meta.getLore();
                     List<String> lore = new ArrayList<>();
-                    List<String> lore_items = Files.getconfigfile().getStringList("LORE").stream().map(s -> s.replaceAll("%sell%", String.format("%,d", get.getInt("ITEMS." + item_name + ".SELL_PRICE"))).replaceAll("%buy%", String.format("%,d", get.getInt("ITEMS." + item_name + ".BUY_PRICE")))).toList();
+                    List<String> lore_items = Files.getconfigfile().getStringList("LORE").stream().map(s -> s.replaceAll("%sell%", String.valueOf(get.get("ITEMS." + item_name + ".SELL_PRICE"))).replaceAll("%buy%", String.valueOf(get.getDouble("ITEMS." + item_name + ".BUY_PRICE")))).toList();
                     if (lore_item == null) {
                         lore.addAll(lore_items);
                     } else {
