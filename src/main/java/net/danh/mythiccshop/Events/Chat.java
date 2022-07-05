@@ -21,7 +21,7 @@ public class Chat implements Listener {
         if (Debug.sell.contains(p)) {
             Shop shop = new Shop(Debug.name.get(p));
             if (isInteger(msg)) {
-                Item.sellMythiccItem(p, shop.getConfig().getString("ITEMS." + Debug.item.get(p) + ".MYTHICC_TYPE"), shop.getConfig().getInt("ITEMS." + Debug.item.get(p) + ".SELL_PRICE"), Integer.parseInt(msg));
+                Item.sellMythiccItem(p, shop.getConfig().getString("ITEMS." + Debug.item.get(p) + ".MYTHICC_TYPE"), shop.getConfig().getDouble("ITEMS." + Debug.item.get(p) + ".SELL_PRICE"), Integer.parseInt(msg));
                 Debug.sell.remove(p);
                 Debug.name.remove(p, shop.getName());
                 Shops.openShop(p, shop);
@@ -37,7 +37,7 @@ public class Chat implements Listener {
         if (Debug.buy.contains(p)) {
             Shop shop = new Shop(Debug.name.get(p));
             if (isInteger(msg)) {
-                Item.buyMythiccItem(p, shop.getConfig().getString("ITEMS." + Debug.item.get(p) + ".MYTHICC_TYPE"), shop.getConfig().getInt("ITEMS." + Debug.item.get(p) + ".BUY_PRICE"), Integer.parseInt(msg));
+                Item.buyMythiccItem(p, shop.getConfig().getString("ITEMS." + Debug.item.get(p) + ".MYTHICC_TYPE"), shop.getConfig().getDouble("ITEMS." + Debug.item.get(p) + ".BUY_PRICE"), Integer.parseInt(msg));
                 Debug.buy.remove(p);
                 Debug.name.remove(p, shop.getName());
                 Shops.openShop(p, shop);

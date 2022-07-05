@@ -13,10 +13,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Objects;
-import java.util.logging.Level;
-
-import static net.danh.mythiccshop.File.Files.*;
+import static net.danh.mythiccshop.File.Files.createfiles;
+import static net.danh.mythiccshop.File.Files.getlanguagefile;
 
 public final class MythiccShop extends JavaPlugin {
 

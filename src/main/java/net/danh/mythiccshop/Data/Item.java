@@ -53,28 +53,28 @@ public class Item {
         player.updateInventory();
     }
 
-    public static void sellMythiccItem(Player p, String type, Integer price, Integer amount) {
+    public static void sellMythiccItem(Player p, String type, Double price, Integer amount) {
         int a = getPlayerAmount(p, MythicBukkit.inst().getItemManager().getItemStack(type).asQuantity(amount));
         if (a >= amount) {
             removeItems(p, MythicBukkit.inst().getItemManager().getItemStack(type), amount);
             EconomyResponse e = MythiccShop.getEconomy().depositPlayer(p, price * amount);
             if (e.transactionSuccess()) {
-                sendPlayerMessage(p, Objects.requireNonNull(getlanguagefile().getString("SELL_ITEMS")).replaceAll("%item%", MythicBukkit.inst().getItemManager().getItemStack(type).getItemMeta().getDisplayName()).replaceAll("%price%", String.format("%,d", price * amount)).replaceAll("%amount%", String.format("%,d", amount)));
+                sendPlayerMessage(p, Objects.requireNonNull(getlanguagefile().getString("SELL_ITEMS")).replaceAll("%item%", MythicBukkit.inst().getItemManager().getItemStack(type).getItemMeta().getDisplayName()).replaceAll("%price%", String.valueOf(price * amount)).replaceAll("%amount%", String.format("%,d", amount)));
             }
         } else {
             sendPlayerMessage(p, Objects.requireNonNull(getlanguagefile().getString("NOT_ENOUGH_ITEM")).replaceAll("%item%", MythicBukkit.inst().getItemManager().getItemStack(type).getItemMeta().getDisplayName()));
         }
     }
 
-    public static void buyMythiccItem(Player p, String type, Integer price, Integer amount) {
+    public static void buyMythiccItem(Player p, String type, Double price, Integer amount) {
         if (MythiccShop.getEconomy().getBalance(p) >= price * amount) {
             EconomyResponse e = MythiccShop.getEconomy().withdrawPlayer(p, price * amount);
             p.getInventory().addItem(MythicBukkit.inst().getItemManager().getItemStack(type).asQuantity(amount));
             if (e.transactionSuccess()) {
-                sendPlayerMessage(p, Objects.requireNonNull(getlanguagefile().getString("BUY_ITEMS")).replaceAll("%item%", MythicBukkit.inst().getItemManager().getItemStack(type).getItemMeta().getDisplayName()).replaceAll("%price%", String.format("%,d", price * amount)).replaceAll("%amount%", String.format("%,d", amount)));
+                sendPlayerMessage(p, Objects.requireNonNull(getlanguagefile().getString("BUY_ITEMS")).replaceAll("%item%", MythicBukkit.inst().getItemManager().getItemStack(type).getItemMeta().getDisplayName()).replaceAll("%price%", String.valueOf(price * amount)).replaceAll("%amount%", String.format("%,d", amount)));
             }
         } else {
-            sendPlayerMessage(p, Objects.requireNonNull(getlanguagefile().getString("NOT_ENOUGH_MONEY")).replaceAll("%money%", String.format("%,d", price * amount)));
+            sendPlayerMessage(p, Objects.requireNonNull(getlanguagefile().getString("NOT_ENOUGH_MONEY")).replaceAll("%money%", String.valueOf(price * amount)));
         }
     }
 
